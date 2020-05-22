@@ -1,0 +1,2 @@
+# yuezato.github.io
+weblog
