@@ -44,9 +44,9 @@ Information flow graph(以下IFGと書くことにする)とは
 始点 $S$ から データコレクター $\dc$ への最小カットは
 $\mathcal{M}$ 以上でなければならない。
 
-\[
+$$
 C(\source; \dc) \geq \mathcal{M}
-\]
+$$
 
 ---
 <b>証明.</b>
