@@ -1,0 +1,29 @@
+<p><span class="math display">\[
+   \def\dc{{\rm DC}}
+   \def\bold#1{{\bf #1}}
+   \def\inode{{{\sf x}_{in}}}
+   \def\onode{{{\sf x}_{out}}}
+   \def\source{{\sf S}}
+\]</span></p>
+<h1 id="network-coding-for-distributed-storage-systems読む">Network Coding for Distributed Storage Systems読む</h1>
+<h2 id="記法">記法</h2>
+<p>あくまでも論文で用いられている記法で、 グラフ理論及びネットワーク符号理論で一般的なものかどうかは 気にしていないことに注意されたい。 + <span class="math inline">\(\mathcal{G}\)</span>: information flow graph + <span class="math inline">\(\mathcal{M}\)</span>: file size + <span class="math inline">\(n \in \mathbb{N}\)</span>: アクティブノード数 + <span class="math inline">\(\alpha \in \mathbb{R}_{\geq 0}\)</span>: 各ノードでのデータサイズ + <span class="math inline">\(d\)</span>: repairする際に通信するノード数 <span class="math inline">\((d \leq n-1)\)</span> + <span class="math inline">\(\beta \in \mathbb{R}_{\geq 0}\)</span>: repairする際に各ノードからもらうデータサイズ + <span class="math inline">\(\gamma = d \cdot \beta\)</span>: repairする際に必要な総データサイズ</p>
+<h2 id="information-flow-graph">Information Flow Graph</h2>
+<p>Information flow graph(以下IFGと書くことにする)とは + Directed Acyclic Graphで + 特に単一の始点 <span class="math inline">\(S\)</span> を持ち + 対になるストレージノード <span class="math inline">\(\inode^i\)</span> と <span class="math inline">\(\onode^i\)</span> を持ち + 複数の終点 <span class="math inline">\(\dc_1, \dc_2, \ldots\)</span> を持つ。 + この論文では終点は単一だと思うので <span class="math inline">\(\dc\)</span> とだけ書く。</p>
+<p>辺には正の実数の重みがついており、繋ぎ方と併せて直感的な意味は以下の通り + <span class="math inline">\(S \xrightarrow{\infty} \inode^i\)</span>: 始点から <span class="math inline">\(\infty\)</span> ストレージノードへの重みは <span class="math inline">\(\infty\)</span> のみで、これは最小カットを考えるための便宜的なもの + <span class="math inline">\(\onode^i \xrightarrow{\infty} \dc\)</span>: 同様 + <span class="math inline">\(\inode^i \xrightarrow{\alpha} \onode^i\)</span>: 直感的にはノード <span class="math inline">\(i\)</span> の蓄えているデータ量 + <span class="math inline">\(\onode^i \xrightarrow{\beta} \inode^j (i \neq j)\)</span>: 直感的には、ノード<span class="math inline">\(j\)</span>をrepairする際に、ノード <span class="math inline">\(i\)</span> からノード <span class="math inline">\(j\)</span> へ送るデータ量</p>
+<h2 id="最小カット">最小カット</h2>
+<p><a href="./mincutmaxflow">最小カット最大フローの記事</a>参考のこと。</p>
+<h2 id="補題1">補題1</h2>
+<p>グラフ <span class="math inline">\(\mathcal{G}\)</span> 中の 始点 <span class="math inline">\(S\)</span> から データコレクター <span class="math inline">\(\dc\)</span> への最小カットは <span class="math inline">\(\mathcal{M}\)</span> 以上でなければならない。</p>
+<p><span class="math display">\[
+C(\source; \dc) \geq \mathcal{M}
+\]</span></p>
+<hr />
+<p><b>証明.</b> カットセット一般の意味は、データのreconstructに使える情報量である。 従って、最小カットセットは再構成に利用できる最小の情報量を示していることになる。最小カットセット値は起こりうる最も厳しい条件で情報を再構成する状況を考えているのがこの補題である。</p>
+<p>最小フローを考えるよりも最大流を考えた方がイメージしやすい気もする。</p>
+<p>注意: この論文 https://arxiv.org/pdf/1301.1549.pdf によると <span class="math inline">\(k\)</span>個のノードが <span class="math inline">\(\dc\)</span> に <span class="math inline">\(\infty\)</span> で接続されているという条件が 定義として加えられている。</p>
+<p><span class="math inline">\(\dc\)</span> の役割は元のデータを復元することにあるので、repairだけでなくreconstrucの面倒をみるところまで考えなくてはならない。</p>
+<ul>
+<li>圧縮アルゴリズムが途中で使われれば、最小カット以下でも再構成が可能ではないかという疑問に答える必要がある</li>
+<li>線形変換でやる場合に全ノードからrepairしないとrobustでないことの説明を与える。</li>
+</ul>
