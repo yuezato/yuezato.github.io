@@ -1,11 +1,13 @@
 <div style="display:none">
+{% raw %}
 $$
    \def\dc{{\rm DC}}
    \def\bold#1{{\bf #1}}
    \newcommand\inode{{{\sf x}_{in}}}
    \newcommand\onode{{{\sf x}_{out}}}
    \def\source{{\sf S}}
-$$   
+$$
+{% endraw %}
 </div>
 
 # Network Coding for Distributed Storage Systems読む
