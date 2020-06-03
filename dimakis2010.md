@@ -1,12 +1,12 @@
-$$
 {% raw %}
+$$
    \def\dc{{\rm DC}}
    \def\bold#1{{\bf #1}}
    \def\inode{{{\sf x}_{in}}}
    \def\onode{{{\sf x}_{out}}}
    \def\source{{\sf S}}
-{% endraw %}   
 $$
+{% endraw %}   
 
 # Network Coding for Distributed Storage Systems読む
 
