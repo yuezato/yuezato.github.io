@@ -10,7 +10,11 @@ $$
 {% endraw %}
 </div>
 
-# Network Coding for Distributed Storage Systems読む
+# Network Coding for Distributed Storage Systemsを読む
+
++ IEEE Transactions on Information Theory掲載版を読みます
++ https://ieeexplore.ieee.org/document/5550492
++ arXivなどにも上がっているようですが違いがあるかどうか分かりません
 
 ## 記法
 あくまでも論文で用いられている記法で、
