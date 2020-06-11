@@ -92,6 +92,7 @@ $\delta_k$は0に近づくので、MDSに漸近的に近づいていく。
 $4$個のparityブロックに $P_1, P_2, P_3, P_4$と名付ける。
 
 更にlocal parityという2つのブロックをデータブロックから次のようにして定義する
+
 $$
 \begin{array}{l}
 S_1 = c_1 X_1 + c_2 X_2 + c_3 X_3 + c_4 X_4 + c_5 X_5, \\
@@ -102,18 +103,22 @@ $$
 このlocal parityをどのようにして使うかだが、
 まずデータブロック側で消失が発生した場合を考える。
 例えば$X_3$のデータを復元することを考えると、$S_1$に参加している他のノードを集めて
+
 $$
 X_3 = c^{-1}_3 (S_1 - c_1 X_1 - c_2 X_2 - c_4 X_4 - c_5 X_5)
 $$
+
 とすれば良い。
 
 $c_3$には逆元が存在しなければならないし、$c_i$達は線形独立となるように
 選ばなければならないが、そのアルゴリズムも論文で具体的に与える。
 
 次にparityブロック側 $P_2$ が消失した場合は
+
 $$
 P_2 = d^{-1}_2(-S_1 - S_2 - d_1 P_1 - d_3 P_3 - d_4 P_4)
 $$
+
 とする。
 
 そのような$d$達が存在することも同様に保証しなければならないが、
@@ -141,6 +146,7 @@ $$
 論文のAppendix Dをベースに書きます。
 
 まず次のような $(n-k, n)$-行列 $\mathbb {H}$ を考えます:
+
 $$
 \mathbb{H} = \begin{pmatrix}
 1 & 1 & \cdots & 1 \\
@@ -150,6 +156,7 @@ a^2_0 & a^2_1 & \cdots & a^2_{k-1} \\
 a^{n-k-1}_0 & a^{n-k-1}_1 & \cdots & a^{n-k-1}_{k-1}
 \end{pmatrix}
 $$
+
 ただし$n \geq k$です。
 
 この行列は高さ$n-k$の幅が$k$のいわゆるVandermonde型の行列です。
@@ -163,20 +170,25 @@ $$
 この生成行列のminimum distanceが$n-k+1$すなわち$n-k$までのデータ消失に耐えられるということが、$\mathbb{H}$の任意の正方行列が逆行列を持つことから言えます（ちゃんと証明を書きたい）
 
 後で使うので$\mathbf{G}$を次のように書いておきます:
+
 $$
 \mathbf{G} = \left( \mathbf{g}_1\ \mathbf{g}_2\ \ldots\  \mathbf{g}_{14} \right).
 $$
 
 $\mathbf{G}$を既にみたlocal parityを2列加えて次のように拡張します:
+
 $$
 \mathbf{G}_{\text{LRC}} = \left[  \mathbf{G} \bigg| \sum^5_{i=1} \mathbf{g}_i \sum^{10}_{i=6} \mathbf{g}_i \right].
 $$
+
 高さが10（＝行ベクトルが10本）で幅が16（=列ベクトルが16本）の行列になったことに注意してください。
 
 また、$\mathbf{G}_{\text{LRC}}$はwlogでsystematic形式にできるのでそのようになっていると仮定します。すなわち
+
 $$
 \mathbf{G}_{\text{LRC}} = [ I_{10}; M_{(10, 4)} ]
 $$
+
 のように左側に単位行列が来るようにできます。$\mathbf{G}$の左側のサイズ10正方行列が逆行列を持つことを利用すれば直ちにできます。
 このようにしておくと、生成行列として使った際にデータが直接出力されるので便利ということもあります。
 
@@ -184,9 +196,11 @@ $$
 これを示すには、$\mathbf{G}_{\text{LRC}}$の任意の列ベクトルが、5本の列ベクトルの線形結合で表せることを示せば十分です。
 
 $\mathbf{g}_1, \ldots, \mathbf{g}_5$のどれかを復元することを考えます。具体的に$\mathbf{g}_1$を考えると、これは
+
 $$
 \mathbf{g}_1 = \left(\sum^5_{i=1}\mathbf{g}_i\right) - \mathbf{g}_2 - \mathbf{g}_3 - \mathbf{g}_4 - \mathbf{g}_5
 $$
+
 から明らかです。
 
 $\mathbf{g}_6, \ldots, \mathbf{g}_{10}$についても同様にすれば良いです。
@@ -198,7 +212,8 @@ $\mathbf{g}_6, \ldots, \mathbf{g}_{10}$についても同様にすれば良い�
 + パリティ検査行列$\mathbf{H}$について$\mathbf{G} \mathbf{H}^T = \mathbf{0}_{(k, n-k)}$が成立する
     + これは符号理論では非常に基本的な性質
 + 特に今回は$\mathbf{H}$の定義より
-$$
+
+    $$
 \mathbf{H}^T = \begin{pmatrix}
 1 & \cdots \\
 1 & \cdots \\
@@ -206,16 +221,20 @@ $$
 1 & \cdots
 \end{pmatrix}
 $$
-となっているから$\mathbf{G}\mathbf{1}^T = \mathbf{0}_{(k, 1)}$が成立する。
+
+    となっているから$\mathbf{G}\mathbf{1}^T = \mathbf{0}_{(k, 1)}$が成立する。
 + 一般の行列の性質で
-$$
+
+    $$
 \mathbf{G} \mathbf{1}^T = \sum^{14}_{i=1} \mathbf{g}_i
 $$
 
 これらを合わせると
+
 $$
 \mathbf{g}_{11} = -\mathbf{\ell}_1 - \mathbf{\ell}_2 - \mathbf{g}_{12} - \mathbf{g}_{13} - \mathbf{g}_{14}
 $$
+
 として書ける。
 
 よってBlock Localityが5になっていることは証明できた。
@@ -229,22 +248,29 @@ $$
 $$
 \mathbf{G}_{\text{LRC}} = ( \mathbf{g}_1\ \mathbf{g}_2\ \ldots \mathbf{g}_{14}\ \mathbf{\ell}_1\ \mathbf{\ell}_2 )
 $$
+
 のうち、
+
 $$
 \mathbf{g}_1, \mathbf{g}_2, \mathbf{g}_3, \mathbf{g}_4, \mathbf{g}_5
 $$
+
 の5つのデータベクトル相当が失われたときに元データが復元できると仮定して矛盾を導く。
 
 これには
+
 $$
 \mathbf{g}_1 = c_1 \ell_1 + c_2 \ell_2 + c_6 \mathbf{g}_6 + \cdots + c_{10} \mathbf{g}_{10} + \cdots + c_{14} \mathbf{g}_{14}
 $$
+
 とするような係数達があると仮定して矛盾を導けば良い。
 
 まず
-$$
+
+\[
 \ell_1 = -(\ell_2 + \mathbf{g}_{11} + \mathbf{g}_{12} + \mathbf{g}_{13} + \mathbf{g}_{14})
-$$
+\]
+
 であるから$\ell_1$を消去できる。
 
 さらに $\ell_2 = \sum^{10}_{i=6}$ であるから $\ell_2$ も消去できる。
