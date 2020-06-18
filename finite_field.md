@@ -98,7 +98,7 @@ $$
     F^{\star} \simeq C_1 \times C_2 \times \cdots \times C_n
  $$
   に直積分解可能である。
-  + https://ja.wikipedia.org/wiki/%E6%9C%89%E9%99%90%E3%82%A2%E3%83%BC%E3%83%99%E3%83%AB%E7%BE%A4%E3%81%AE%E6%A7%8B%E9%80%A0%E5%AE%9A%E7%90%86
+  + [有限アーベル群の構造定理](https://ja.wikipedia.org/wiki/%E6%9C%89%E9%99%90%E3%82%A2%E3%83%BC%E3%83%99%E3%83%AB%E7%BE%A4%E3%81%AE%E6%A7%8B%E9%80%A0%E5%AE%9A%E7%90%86)
   + 特に $|C_i|$は$|C_{i+1}|$を割り切るし、$|F^{\star}| = \prod |C_i|$
 + $k = |C_n|$とすると、任意の$x \in F^{\star}$について$x^k = 1_F$であり、$k \leq |F^{\star}|$が成立する。
 + ところで$x^k - 1_F$の根の個数は因数定理から高々$k$なので
