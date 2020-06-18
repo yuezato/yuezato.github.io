@@ -1,8 +1,12 @@
+<div style="display:none">
+{% raw %}
 $$
   \def\galf{{\textit{GF}}}
   \def\set#1{{\{#1\}}}
   \def\finf{{\mathbb{F}}}
 $$
+{% endraw %}
+</div>
 
 有限体について書きます。
 
