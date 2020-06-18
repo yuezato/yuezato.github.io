@@ -1,9 +1,9 @@
 <div style="display:none">
 {% raw %}
 $$
-  \gdef\galf{{\textit{GF}}}
-  \gdef\set#1{{\{#1\}}}
-  \gdef\finf{{\mathbb{F}}}
+  \def\galf{{\textit{GF}}}
+  \def\set#1{{\{#1\}}}
+  \def\finf{{\mathbb{F}}}
 $$
 {% endraw %}
 </div>
