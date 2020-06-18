@@ -1,5 +1,14 @@
+$$
+\gdef\hoge{{fuga}}
+$$
+
 # Test
 Hello
+
+# マクロのテスト
+$\hoge$
+
+$$\hoge$$
 
 # 数式のテスト
 $$
