@@ -1,14 +1,13 @@
 <div style="display:none">
 {% raw %}
+$$
+  \def\galf{{\textit{GF}}}
+  \def\set#1{{\{#1\}}}
+  \def\finf{{\mathbb{F}}}
+  \def\card#1{{|#1|}}
+$$
 {% endraw %}
 </div>
-
-$$
-  \gdef\galf{{\textit{GF}}}
-  \gdef\set#1{{\{#1\}}}
-  \gdef\finf{{\mathbb{F}}}
-  \gdef\card#1{{|#1|}}
-$$
 
 有限体について書きます。
 
