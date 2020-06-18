@@ -94,9 +94,14 @@ $$
 有限体$F$の積に関する群$F^\star = F \setminus \set{ 0_F }$は巡回群である。
 + $F^{\star}$は$F$の積が可換なので有限アーベル群である
 + 有限アーベル群の構造定理を適用して以下のように直積分解可能である:
+    $$F^{\star} \simeq C_1 \times C_2 \times \cdots \times C_n$$
+
 + 特に $|C_i|$ は $|C_{i+1}|$ を割り切るし $|F^{\star}| = \prod |C_i|$
+
 + $k = |C_n|$ とすると、任意の $x \in F^{\star}$ について $x^k = 1_F$ で $k \leq |F^{\star}|$
+
 + ところで $x^k - 1_F$ の根の個数は因数定理から高々 $k$ なので $|F^{\star}| \leq k$
+
 + 結局 $F_{\star} \simeq \mathbb{Z} / k\mathbb{Z}$ という巡回群であることに他ならない。
 
 この系として、有限体$F$の要素数を$q = |F|$とすると
