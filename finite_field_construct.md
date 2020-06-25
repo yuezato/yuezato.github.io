@@ -1,17 +1,33 @@
-# $\galf(2^n)$を具体的に構成する
+<div style="display:none">
+{% raw %}
+$$
+  \def\modeq#1{\mathrel{{\equiv_{#1}}}}
+  \def\modp#1{\mathop{{+}_{#1}}}
+  \def\modm#1{\mathop{{\cdot}_{#1}}}
+  \def\modd{\mathop{\%}}
+  \def\tuple#1{\langle#1\rangle}
+  \def\set#1{\{#1\}}
+  \def\galf{{\mathit{GF}}}
+$$
+{% endraw %}
+</div>
 
-## 素数$p$についての$\galf(p)$の具体的な構成
+# $\galf(2^n)$ を具体的に構成する
+
+## 素数$p$についての $\galf(p)$ の具体的な構成
 素数$p$についての $\galf(p)$ の定義は以下の通り:
-1. 要素は$\set{0, 1, 2, \ldots, p-1}$で与えられる。
-2. 加算$x \modp{p} y$の定義は自然数上でそれを行って$p$の剰余を取る。乗算$\modm{p}$も同様:
-  $$
-   \begin{aligned}
-    x \modp{p} y = (x + y) \modd p, \\
-    x \modm{p} y = (x * y) \modd p.
-   \end{aligned}
-  $$
-    + ここで$+$と$\cdot$はそれぞれ自然数上の加算と乗算である。
-4. 減算 $x \mathrel{ {-}_p } y$ は逆元との加算$x \modp{p} (-y)$で定める。
+1. 要素は $\set{0, 1, 2, \ldots, p-1}$ で与えられる。
+2. 加算 $x \modp{p} y$ の定義は自然数上でそれを行って$p$の剰余を取る。乗算 $\modm{p}$ も同様:
+
+    $$
+       \begin{aligned}
+        x \modp{p} y = (x + y) \modd p, \\
+        x \modm{p} y = (x * y) \modd p.
+       \end{aligned}
+    $$
+
+    + ここで ${+}$ と $\cdot$ はそれぞれ自然数上の加算と乗算である。
+4. 減算 $x \mathrel{ {-}_p } y$ は逆元との加算 $x \modp{p} (-y)$ で定める。
     + $y$に対する逆元$-y$は $y + -y \modeq{p} 0$ とするもの。
     + 下で証明するが、このようなものは唯一つに定まる。
 5. 除算$x / y$は$x \modm{p} y^{-1}$で定める。
@@ -23,6 +39,7 @@
 本当に体になるかどうか確認してみる。
 
 次の一般の性質を使う
+
   $$
     x_1 \modeq{p} y_1, x_2 \modeq{p} y_2 \implies
     \begin{cases}
@@ -33,6 +50,7 @@
 
 $a, b, c \in \galf(p)$とする。
 加算の結合則 $(a \modp{p} b) \modp{p} c = a \modp{p} (b \modp{p} c)$.
+
 $$
 \begin{aligned}
 (a \modp{p} b) \modp{p} c &= ((a + b) \modd p + c) \modd p \\
@@ -47,6 +65,7 @@ $$
 
 
 加算の可換性は
+
 $$
 a \modp{p} b = (a + b) \modd p = (b + a) \modd p = b \modp{p} a.
 $$
@@ -54,9 +73,11 @@ $$
 乗算の可換性 $a \modm{p} b = b \modm{p} a$ も同様。
 
 $0$が加算の単位元になることは
+
 $$
 a \modp{p} 0 = (a + 0) \modd p = a \modd p = a
 $$
+
 より明らか。$1$が乗算の単位元になることも同様である。
 
 $a$の加算に関する逆元$-a$を次で定義する:
