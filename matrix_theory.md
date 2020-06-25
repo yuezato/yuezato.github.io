@@ -41,9 +41,9 @@ a_{h1} & a_{h2} & \ldots & a_{hw}
 \end{pmatrix}.
 $$
 
-$A_{ij}$ で $i$-番目の行ベクトル
-${ { \bec{a} }_{ i } }$ の
-$j$-番目の要素 ${ a_{ i j } }$ を表します。
+$A_{ ij }$ で $i$ 番目の行ベクトル
+ ${\bec{a}_{ i }}$ の
+$j$ 番目の要素 $a_{ i j }$ を表します。
 
 # Gauss–Jordan eliminationによる逆行列の計算
 
