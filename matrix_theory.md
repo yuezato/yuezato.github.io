@@ -1,19 +1,445 @@
+<div style="display:none">
+{% raw %}
+$$
+  \def\bec#1{{\mathbf{#1}}}
+$$
+{% endraw %}
+</div>
+
 行列の話を色々書きます
 
 # 記法
+
+この頁ではことわりがなければ 体$K$ 上の行列を考えます。
+
+太文字 $\bec{a}$ で行ベクトルをあらわします。
+
+$k \in K$ について
+
+$$
+k \cdot \bec{a} =
+k \cdot (a_1, a_2, \ldots, a_n) =
+(k a_1, k a_2, \ldots, k a_n)
+$$
+
+として積を導入しときます。
 
 $(h, w)$-行列というのは次のような高さが$h$で幅が$w$の行列です
 
 $$
 \begin{pmatrix}
-x_{11} & x_{12} & \ldots & x_{1w} \\
-x_{21} & x_{22} & \ldots & x_{2w} \\
-& & \vdots \\
-x_{h1} & x_{h2} & \ldots & x_{hw}
+\bec{a}_1 \\
+\bec{a}_2 \\
+\vdots \\
+\bec{a}_h
+\end{pmatrix} =
+\begin{pmatrix}
+a_{11} & a_{12} & \ldots & a_{1w} \\
+a_{21} & a_{22} & \ldots & a_{2w} \\
+\vdots & \vdots & a_{ij} & \vdots \\
+a_{h1} & a_{h2} & \ldots & a_{hw}
 \end{pmatrix}
 $$
 
-# ヴァンデルモンド行列
+$A_{ij}$ で $i$番目の行ベクトル $\bec{a}_i$ の $j$番目の要素 $a_{ij} \in K$ を表します。
+
+# Gauss–Jordan eliminationによる逆行列の計算
+
++ いわゆる掃き出し法について述べる
+    + ただしガウスジョルダン消去法は後退しないようなもの
+    + ガウス消去法は
++ 掃き出し法によって単位行列にできるなら、逆行列が存在する
++ 逆行列が存在するなら、単位行列にできる
+
+$$
+\begin{pmatrix}
+0 && a && b \\
+c && d && e \\
+f && g && h
+\end{pmatrix}
+$$
+
+のような時、一般には対角成分に零元がある時は入れ替えなきゃだめかなあ。
+並べ替えって結構面倒くさいのではないか実は。
+
+手順としては
+
+```ruby
+for i in 1..n {
+  M[i][i]が零元だと掃き出しが出来ないので
+  M[k][i] != 0 となるような k>i 行目の列ベクトルとi行目を入れ替える。 # 入れ替え (1)
+  （入れ替えた後の行列もそのままMと書くことにする）
+
+  もしそのようなkがなければ逆行列は存在しないので計算終了 (★)
+
+  M[i] = M[i] / M[i][i] としてM[i][i]を1にしておく # 正規化 (2)
+
+  for j in 1..n {
+    if i != j then
+      M[j] -= M[j][i] * M[i]; # 掃き出し (3)
+    end
+  }
+}
+
+(★)でexitせずここまで来たならば M は単位行列になっている
+```
+
+この疑似プログラムの正当性として
+
+(a). 計算が正常終了する => 正則行列
+(b). 正則行列 => 計算が正常終了する
+
+を証明する。
+
+そのために行の入れ替え操作(1)と、
+体の要素を行に掛ける操作(2)と、
+ある行に別の行を足し込む操作(3)が
+基本行列と呼ばれる逆行列で表現できることを証明しておく。
+
+$(n, n)$-行列 $M$ の $i$-行ベクトルと $j$-行ベクトルを入れ替える操作 $A_{i \leftrightarrow j}$ は $i < j$ とすると
+
+$$
+A_{i \leftrightarrow j} =
+\begin{pmatrix}
+\bec{c}_1 \\
+\bec{c}_2 \\
+\vdots \\
+\bec{c}_j \\
+\vdots \\
+\bec{c}_i \\
+\vdots \\
+\bec{c}_n
+\end{pmatrix}
+$$
+
+と書ける。ただし
++ $\bec{c}_k = (0\ 0\ \ldots 1\ \ldots 0)$ は先頭から$k$番目が値$1$を持つような列ベクトルで
++ $A_{i \leftrightarrow j}$は上から$i$番目に $\bec{c}_j$ があり、$j$番目に $\bec{c}_i$ が存在している。
+
+単位行列は
+
+$$
+I_n = \begin{pmatrix}
+\bec{c}_1 \\
+\vdots \\
+\bec{c}_i \\
+\vdots \\
+\bec{c}_j \\
+\vdots \\
+\bec{c}_n
+\end{pmatrix}
+$$
+
+と書けることに注意する。
+
+$C_{i \leftarrow j} A$ が $A$ の$i$行目と$j$行目を入れ替えることは、
+
+$$
+A = \begin{pmatrix}
+\bec{a}_1 \\
+\vdots \\
+\bec{a}_n
+\end{pmatrix}
+$$
+
+としてみると
+
+$$
+C_{i \leftarrow j} A = \begin{pmatrix}
+1 \cdot \bec{a}_1 + 0 \cdot \bec{a}_2 + \cdots + 0 \cdot \bec{a}_n \\
+0 \cdot \bec{a}_1 + 1 \cdot \bec{a}_2 + \cdots + 0 \cdot \bec{a}_n \\
+\vdots \\
+0 \cdot \bec{a}_1 + \cdots + 1 \cdot \bec{a}_j + \cdots + 0 \cdot \bec{a}_n \\
+\vdots \\
+0 \cdot \bec{a}_1 + \cdots + 1 \cdot \bec{a}_i + \cdots + 0 \cdot \bec{a}_n \\
+\vdots \\
+0 \cdot \bec{a}_1 + \cdots + 1 \cdot \bec{a}_n
+\end{pmatrix} =
+\begin{pmatrix}
+\bec{a}_1 \\
+\bec{a}_2 \\
+\vdots \\
+\bec{a}_j \\
+\vdots \\
+\bec{a}_i \\
+\vdots \\
+\bec{a}_n
+\end{pmatrix}
+$$
+
+となることから明らかである。
+
+また $A_{i \leftarrow j} A_{i \leftarrow j} = I$ であるから $A_{i \leftarrow j}$ は正則行列である。
+
+次に指定した行$i$を$k$倍する操作であるが、これは
+
+$$
+C_{k \cdot i} \begin{pmatrix}
+\bec{a}_1 \\
+\bec{a}_2 \\
+\vdots \\
+\bec{a}_n
+\end{pmatrix} =
+\begin{pmatrix}
+\bec{c}_1 \\
+\bec{c}_2 \\
+\vdots \\
+k \cdot \bec{c}_i \\
+\vdots \\
+\bec{c}_n
+\end{pmatrix} \begin{pmatrix}
+\bec{a}_1 \\
+\bec{a}_2 \\
+\vdots \\
+\bec{a}_n
+\end{pmatrix} =
+\begin{pmatrix}
+\bec{a}_1 \\
+\bec{a}_2 \\
+\vdots \\
+k \cdot \bec{a}_i \\
+\vdots \\
+\bec{a}_n
+\end{pmatrix}
+$$
+
+とすれば良い。
+
+$$
+C_{k \cdot i} \ C_{k^{-1} \cdot i} = I_n
+$$
+
+であるから $C_{k \cdot i}$ も逆行列を持つ。
+
+$i$行目の$k$倍を$j$行目に足す操作であるが、これには
+
+$$
+C_{j += k \cdot i} \begin{pmatrix}
+\bec{a}_1 \\
+\vdots \\
+\bec{a}_i \\
+\vdots \\
+\bec{a}_j \\
+\vdots \\
+\bec{a}_n
+\end{pmatrix} =
+\begin{pmatrix}
+\bec{c}_1 \\
+\vdots \\
+\bec{c}_ i \\
+\vdots \\
+k \cdot \bec{c}_i + \bec{c}_j \\
+\vdots \\
+\bec{c}_n
+\end{pmatrix}
+\begin{pmatrix}
+\bec{a}_1 \\
+\vdots \\
+\bec{a}_i \\
+\vdots \\
+\bec{a}_j \\
+\vdots \\
+\bec{a}_n
+\end{pmatrix}
+= \begin{pmatrix}
+\bec{a}_1 \\
+\vdots \\
+\bec{a}_i \\
+\vdots \\
+k \cdot \bec{a}_i + \bec{a}_j \\
+\vdots \\
+\bec{a}_n
+\end{pmatrix}
+$$
+
+とすれば良い。
+
+$$
+C_{j += k \cdot i} \ C_{j += (-k) \cdot i} = I_n
+$$
+
+であるから、これもまた逆行列になる。
+
+さて、計算が正常終了する場合というのは
+
+$$
+C_1 C_2 \cdots C_n A = I
+$$
+
+とするような基本操作列 $C_1, C_2, \ldots, C_n$ が存在することになり、
+行列 $(C_1 C_2 \cdots C_n)$ が $A$ の逆行列になる。
+
+一方で計算が異常終了した場合に $A$ が正則でない場合を考える。
+この対偶をとれば、$A$が正則であれば手続きが正常終了することがいえる。
+
+さて、計算が異常終了する場合というのは
+
+$$
+(C_1 C_2 \cdots C_n) A = \begin{pmatrix}
+a_{11}=1& 0 & \cdots & 0 & a_{1, i+1} & \cdots \\
+0 & a_{22}=1 & \cdots & 0 & a_{2, i+1} & \cdots \\
+\vdots & \vdots & & \vdots & \vdots & \\
+0 & 0 & \cdots & a_{ii}=1 & a_{i, i+1} & \cdots \\
+0 & 0 & \cdots & 0 & 0 & \cdots\\
+{\huge 0}  & {\huge 0} & \cdots & {\huge 0}  & {\huge 0} & \cdots
+\end{pmatrix}
+$$
+
+とする基本行列たち $C_1, C_2, \ldots, C_n$ があるということになる。
+
+このとき、右辺から基本行列をかけると今度は列に関する変形ができるため、
+$a_{i, i+1}$から始まる列を全て0にできる。
+この行列は明らかに正則行列ではないので証明が終わるが、もう少し泥臭くやっておく。
+
+まず右辺の行列をブロック行列でもう少し見やすくしておく
+
+$$
+\left(
+\begin{array}{c|c|c}
+I_i & \bec{a} & P \\\hdashline
+{\large 0} & \bec{0} & Q
+\end{array}
+\right)
+$$
+
+ここだけは$\bec{a}, \bec{0}$を行ベクトルでなく列ベクトルとして使っています。
+
+このとき相異なる列ベクトル $\bec{v}, \bec{w}$ で
+
+$$
+((C_1 C_2 \cdots C_n) A) \bec{v} =
+((C_1 C_2 \cdots C_n) A) \bec{w}
+$$
+
+とするものがあることをみる。
+
+列ベクトル側もブロック表記すると、
+
+$$
+\left(
+\begin{array}{c|c|c}
+I_i & \bec{a} & P \\\hdashline
+{\large 0} & \bec{0} & Q
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+\bec{x} \\\hdashline
+z \\\hdashline
+\bec{y}
+\end{array}
+\right) =
+\left(
+\begin{array}{c}
+I_i \bec{x} + z \bec{a} + P \bec{y} \\\hdashline
+Q \bec{y}
+\end{array}  
+\right)
+$$
+
+と書けて次が成立する:
+
+$$
+\left(
+\begin{array}{c|c|c}
+I_i & \bec{a} & P \\\hdashline
+{\large 0} & \bec{0} & Q
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+\bec{x} \\\hdashline
+z \\\hdashline
+\bec{y}
+\end{array}
+\right) =
+\left(
+\begin{array}{c}
+I_i \bec{x} + z \bec{a} + P \bec{y} \\\hdashline
+Q \bec{y}
+\end{array}  
+\right) =
+\left(
+\begin{array}{c|c|c}
+I_i & \bec{a} & P \\\hdashline
+{\large 0} & \bec{0} & Q
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+\bec{x} + z \bec{a} \\\hdashline
+0 \\\hdashline
+\bec{y}
+\end{array}
+\right)
+$$
+
+すなわち任意の $z \neq 0$ で、変形済み行列が正則でない証拠になる。
+
+# Gaussian-Eliminationによる解の計算
+
+列ベクトル$y$と正則$A$が与えられた時に
+
+$$
+y = A x
+$$
+
+を満たす列ベクトル$x$を求めたい。
+上でみたように逆行列をGJEによって求めて、 $A^{-1}y$ を計算してしまう手もあるが、
+もう少し計算回数を減らす方向としてGaussian Elimination(GE)がある。
+
+こちらも基本変形行列を用いる。
+
+$$
+P_1 P_2 \cdots P_m A =
+\begin{pmatrix}
+a_{1,1} & a_{1,2} & a_{1,3} & \cdots & a_{1,n-1} & a_{1,n} \\
+0 & a_{2,2} & a_{2,3} & \cdots & a_{2,n-1} & a_{2,n} \\
+0 & 0 & a_{3,3} & \cdots & a_{3, n-1} & a_{3,n} \\
+\vdots & \vdots & \vdots & & \vdots & \vdots \\
+0 & 0 & 0 & \cdots & a_{n-1,n-1} & a_{n-1,n} \\
+0 & 0 & 0 & \cdots & 0 & a_{n, n}
+\end{pmatrix} = U
+$$
+
+によって左下に零元が集まるようにして、右上三角行列 $U$ を作る。
+
+各$P$は基本行列であるから
+
+$$
+A x = y \iff ((P_1 P_2 \cdots P_m) A) x = (P_1 P_2 \cdots P_m) y
+$$
+
+なので
+
+$$
+U \begin{pmatrix}
+x_1 \\
+\vdots \\
+x_{n-1} \\
+x_n
+\end{pmatrix}
+= \begin{pmatrix}
+z_1 \\
+\vdots \\
+z_{n-1} \\
+z_n
+\end{pmatrix}
+$$
+
+の形を解けば良い。
+
+これを解く時に、$U$を下から上に向かって見ていく。すなわち
+
++ $a_{n, n} x_n = z_n$ とする $x_n = \frac{z_n}{a_{n,n}}$ を取れば良い。
++ $a_{n-1, n-1} x_{n-1} + a_{n-1, n} x_n = z_{n-1}$ とする $x_{n-1}$を取れば良いが、既に$x_n$が確定しているのですぐに求まる。
++ このようにして $x_n, x_{n-1}, \ldots, x_2, x_1$ の順番に確定させていく。
+
+上の手順で解ベクトル$x$が求まることが分かる。
+
+$0$にする箇所が減ることに加えて、逆行列を求めたあとに行列積を行う必要がない。
+
+# Vandermonde行列
 
 $$
 V(h, w) =
@@ -91,7 +517,7 @@ $\det V$が非零になるためには $a_j - a_i$ が全て非零である必�
 
 実数体や複素数体では $a \neq b \implies a^k \neq b^k$ が自動的に導けるのですが、一般の体ではこれが成立せず、実際に上で見たように$GF(7)$では$2 \neq 4$だが$2^3 = 4^3$となってしまいます。
 
-# ヴァンデルモンド行列はMDS生成行列とは
+# MDS生成行列としてのVandermonde行列
 $(n, n+k)$-生成行列$M$による作用
 
 $$
