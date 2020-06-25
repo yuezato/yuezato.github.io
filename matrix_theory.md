@@ -38,10 +38,12 @@ a_{11} & a_{12} & \ldots & a_{1w} \\
 a_{21} & a_{22} & \ldots & a_{2w} \\
 \vdots & \vdots & a_{ij} & \vdots \\
 a_{h1} & a_{h2} & \ldots & a_{hw}
-\end{pmatrix}
+\end{pmatrix}.
 $$
 
-$A_{ij}$ で $i$番目の行ベクトル ${ \bec{a}_{ i } }$ の $j$番目の要素 ${a_{ ij }  } \in K$ を表します。
+$A_{ij}$ で $i$-番目の行ベクトル
+${ { \bec{a} }_{ i } }$ の
+$j$-番目の要素 ${ a_{ i j } }$ を表します。
 
 # Gauss–Jordan eliminationによる逆行列の計算
 
