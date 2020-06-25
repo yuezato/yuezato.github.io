@@ -1,17 +1,3 @@
-<div style="display:none">
-{% raw %}
-$$
-  \def\modeq#1{\mathrel{{\equiv_{#1}}}}
-  \def\modp#1{\mathop{{+}_{#1}}}
-  \def\modm#1{\mathop{{\cdot}_{#1}}}
-  \def\modd{\mathop{\%}}
-  \def\tuple#1{\langle#1\rangle}
-  \def\set#1{\{#1\}}
-  \def\galf{{\mathit{GF}}}
-$$
-{% endraw %}
-</div>
-
 # $\galf(2^n)$を具体的に構成する
 
 ## 素数$p$についての$\galf(p)$の具体的な構成
